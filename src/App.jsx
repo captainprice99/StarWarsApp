@@ -9,14 +9,21 @@ const descriptions = [
 ];
 
 function MyButton(){
+  const [num, setNum] = useState(0)
+  function handleClick(){
+    alert('What is your favorite saga in the Star Wars Universe? Is it the clone wars saga, or is it the time period with the First Order?')
+    setNum(num + 1)
+  }
+
   return (
   <div className = "firstblock">
-    <button>
+    <button onClick = {handleClick}>
       <h1>The <em>Clone Wars</em> lore</h1>
              <p>The Clone Wars was a time period in the star wars universe where the clones were still on the </p>
               <p>side of the Jedi and the dark side consisted of droids and multiple sith lords. At this time</p>
               <p>Anakin Skywalker was still on the light side and he had not become Darth Vader yet. No one knew</p>
               <p>that Chancellor Palpatine was actually behind the whole war.</p>
+              <p>Oh, and by the way, you've tried to make up your mind {num} times!</p>
     </button>
   </div>
   );
