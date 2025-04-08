@@ -11,7 +11,6 @@ import CharacterDetail from './pages/CharacterDetail';
 import CreateCharacter from './pages/CreateCharacter';
 import CharacterBattle from './components/CharacterBattle';
 import PrivateRoute from './components/PrivateRoute';
-import CharacterBattle3D from './components/CharacterBattle3D';
 
 // Create a dark theme
 const darkTheme = createTheme({
