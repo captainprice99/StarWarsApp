@@ -1,14 +1,37 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, Button, Paper, Grid } from '@mui/material';
+import { Box, Typography, Button, Paper, Grid, Card, CardContent, CardMedia } from '@mui/material';
 import axios from 'axios';
+import { io } from 'socket.io-client';
 
 const CharacterBattle = () => {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacters, setSelectedCharacters] = useState([]);
+  const [battleStatus, setBattleStatus] = useState('idle');
   const [battleResult, setBattleResult] = useState(null);
+  const [spectators, setSpectators] = useState(0);
 
   useEffect(() => {
     fetchCharacters();
+    const socket = io('http://localhost:3001');
+
+    socket.on('battle_start', (data) => {
+      setBattleStatus('fighting');
+      setSpectators(data.spectators);
+    });
+
+    socket.on('battle_end', (data) => {
+      setBattleStatus('finished');
+      setBattleResult(data.winner);
+      setSpectators(data.spectators);
+    });
+
+    socket.on('spectator_update', (count) => {
+      setSpectators(count);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const fetchCharacters = async () => {
@@ -26,24 +49,18 @@ const CharacterBattle = () => {
     }
   };
 
-  const battle = () => {
-    if (selectedCharacters.length !== 2) return;
-
-    const [char1, char2] = selectedCharacters;
-    const power1 = parseInt(char1.mass) || 0;
-    const power2 = parseInt(char2.mass) || 0;
-
-    if (power1 > power2) {
-      setBattleResult(`${char1.name} wins!`);
-    } else if (power2 > power1) {
-      setBattleResult(`${char2.name} wins!`);
-    } else {
-      setBattleResult("It's a tie!");
+  const startBattle = () => {
+    if (selectedCharacters.length === 2) {
+      const socket = io('http://localhost:3001');
+      socket.emit('start_battle', {
+        characters: selectedCharacters,
+      });
     }
   };
 
   const resetBattle = () => {
     setSelectedCharacters([]);
+    setBattleStatus('idle');
     setBattleResult(null);
   };
 
@@ -52,9 +69,36 @@ const CharacterBattle = () => {
       <Typography variant="h4" gutterBottom>
         Character Battle Arena
       </Typography>
+      <Typography variant="body1" color="text.secondary" gutterBottom>
+        Spectators: {spectators}
+      </Typography>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ p: 2 }}>
+            <Grid container spacing={2}>
+              {selectedCharacters.map((character, index) => (
+                <Grid item xs={6} key={character.name}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={`https://starwars-visualguide.com/assets/img/characters/${character.url.split('/').slice(-2, -1)}.jpg`}
+                      alt={character.name}
+                    />
+                    <CardContent>
+                      <Typography variant="h6">{character.name}</Typography>
+                      <Typography variant="body2">Height: {character.height}</Typography>
+                      <Typography variant="body2">Mass: {character.mass}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
           <Paper sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               Available Characters
@@ -72,41 +116,30 @@ const CharacterBattle = () => {
                 </Button>
               ))}
             </Box>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Selected Characters
-            </Typography>
-            {selectedCharacters.map((character) => (
-              <Box key={character.name} sx={{ mb: 2 }}>
-                <Typography variant="subtitle1">{character.name}</Typography>
-                <Typography variant="body2">Mass: {character.mass}</Typography>
-              </Box>
-            ))}
             {selectedCharacters.length === 2 && (
               <Button
                 variant="contained"
                 color="primary"
-                onClick={battle}
+                onClick={startBattle}
+                disabled={battleStatus === 'fighting'}
+                fullWidth
                 sx={{ mt: 2 }}
               >
-                Battle!
+                {battleStatus === 'fighting' ? 'Battle in Progress...' : 'Start Battle'}
               </Button>
             )}
             {battleResult && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="h6" color="primary">
-                  {battleResult}
+                  Winner: {battleResult.name}
                 </Typography>
                 <Button
                   variant="outlined"
                   onClick={resetBattle}
+                  fullWidth
                   sx={{ mt: 2 }}
                 >
-                  Reset Battle
+                  New Battle
                 </Button>
               </Box>
             )}

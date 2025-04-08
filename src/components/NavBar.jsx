@@ -2,8 +2,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 
-const NavBar = () => {
-  const { user, logout } = useAuth();
+const Navbar = () => {
+  const { currentUser, logout } = useAuth();
 
   return (
     <AppBar position="static">
@@ -22,26 +22,23 @@ const NavBar = () => {
           Star Wars Universe
         </Typography>
         <Box>
-          <Button
-            color="inherit"
-            component={RouterLink}
-            to="/characters"
-          >
-            Characters
-          </Button>
-          {user ? (
+          {currentUser ? (
             <>
               <Button
                 color="inherit"
                 component={RouterLink}
-                to="/create-character"
+                to="/characters"
               >
-                Create Character
+                Characters
               </Button>
               <Button
                 color="inherit"
-                onClick={logout}
+                component={RouterLink}
+                to="/battle"
               >
+                Battle Arena
+              </Button>
+              <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
             </>
@@ -69,4 +66,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar; 
+export default Navbar; 
