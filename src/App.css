@@ -1,3 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #ffd700;
+  --secondary-color: #4a90e2;
+  --background-dark: #121212;
+  --background-light: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  font-family: 'Orbitron', sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Navbar Styles */
+.MuiAppBar-root {
+  background-color: var(--background-light) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Card Styles */
+.MuiCard-root {
+  background-color: var(--background-light) !important;
+  transition: transform 0.3s ease-in-out !important;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-5px);
+}
+
+/* Button Styles */
+.MuiButton-contained {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) !important;
+  color: var(--background-dark) !important;
+  font-weight: bold !important;
+}
+
+.MuiButton-outlined {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+/* Form Styles */
+.MuiTextField-root .MuiOutlinedInput-root {
+  color: var(--text-primary) !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-notchedOutline {
+  border-color: var(--text-secondary) !important;
+}
+
+.MuiTextField-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color) !important;
+}
+
+/* Select Styles */
+.MuiSelect-select {
+  color: var(--text-primary) !important;
+}
+
+.MuiSelect-icon {
+  color: var(--text-secondary) !important;
+}
+
+/* Typography Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif !important;
+  color: var(--primary-color) !important;
+}
+
+/* Animation for Star Wars theme */
+@keyframes starWarsScroll {
+  0% {
+    transform: perspective(500px) rotateX(20deg) translateY(0);
+  }
+  100% {
+    transform: perspective(500px) rotateX(20deg) translateY(-100%);
+  }
+}
+
+.star-wars-intro {
+  animation: starWarsScroll 20s linear infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .MuiGrid-container {
+    flex-direction: column;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,4 +169,5 @@
 .read-the-docs {
   color: #888;
 }
+
 
