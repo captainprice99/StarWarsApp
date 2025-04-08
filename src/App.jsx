@@ -9,6 +9,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import CharacterDetail from './pages/CharacterDetail';
 import CreateCharacter from './pages/CreateCharacter';
+import CharacterBattle from './components/CharacterBattle';
+import PrivateRoute from './components/PrivateRoute';
 
 // Create a dark theme
 const darkTheme = createTheme({
@@ -23,6 +25,12 @@ const darkTheme = createTheme({
     background: {
       default: '#121212',
       paper: '#1e1e1e',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontFamily: '"Star Jedi", "Arial", sans-serif',
     },
   },
 });
@@ -57,6 +65,14 @@ function App() {
                     <ProtectedRoute>
                       <CreateCharacter />
                     </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/battle"
+                  element={
+                    <PrivateRoute>
+                      <CharacterBattle />
+                    </PrivateRoute>
                   }
                 />
               </Routes>

@@ -1,133 +1,96 @@
-# React + Vite
+# Star Wars Universe App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-# Star Wars Universe Application
-
-A full-stack web application for exploring and managing Star Wars characters, built with React, Node.js, Express, and MongoDB.
+A comprehensive Star Wars application that allows users to explore the Star Wars universe, create custom characters, and engage in character battles.
 
 ## Features
 
-- User authentication (register, login, logout)
-- Browse Star Wars characters with filtering and search
-- Create, read, update, and delete character entries
-- Responsive design with a Star Wars-themed UI
-- Pagination for character listings
-- Detailed character profiles
+- **User Authentication**
+  - Secure login and registration using Firebase Authentication
+  - Protected routes for authenticated users
+  - Persistent user sessions
+
+- **Character Exploration**
+  - Browse official Star Wars characters from SWAPI
+  - View detailed character information
+  - Search and filter characters
+
+- **Character Creation**
+  - Create custom Star Wars characters
+  - Upload character images
+  - Save characters to your profile
+
+- **Battle Arena**
+  - Select two characters to battle
+  - Compare character attributes
+  - Determine battle outcomes based on character stats
+  - Interactive battle interface
 
 ## Tech Stack
 
-### Frontend
-- React
-- Material-UI
-- React Router
-- Axios
-- Context API for state management
+- **Frontend**
+  - React.js with Vite
+  - Material-UI for styling
+  - React Router for navigation
+  - TypeScript for type safety
+  - Zustand for state management
+  - Jest and React Testing Library for testing
 
-### Backend
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- JWT for authentication
-- Bcrypt for password hashing
+- **Backend & Services**
+  - Firebase Authentication
+  - Firebase Firestore
+  - Star Wars API (SWAPI)
+  - Axios for API requests
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB
 - npm or yarn
+- Firebase account
 
-## Installation
+### Installation
 
 1. Clone the repository:
-```bash
-git clone <repository-url>
-cd StarWarsApp
-```
+   ```bash
+   git clone https://github.com/yourusername/star-wars-app.git
+   cd star-wars-app
+   ```
 
-2. Install frontend dependencies:
-```bash
-npm install
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-3. Install backend dependencies:
-```bash
-cd backend
-npm install
-```
+3. Set up Firebase:
+   - Create a new Firebase project
+   - Enable Authentication and Firestore
+   - Add your Firebase configuration to `src/firebase.js`
 
-4. Create a `.env` file in the backend directory with the following variables:
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/starwars
-JWT_SECRET=your_jwt_secret_key_here
-```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Running the Application
-
-1. Start the backend server:
-```bash
-cd backend
-npm start
-```
-
-2. Start the frontend development server:
-```bash
-npm run dev
-```
-
-3. Open your browser and navigate to `http://localhost:5173`
-
-## API Endpoints
-
-### Authentication
-- POST `/api/auth/register` - Register a new user
-- POST `/api/auth/login` - Login user
-- GET `/api/auth/me` - Get current user info
-
-### Characters
-- GET `/api/characters` - Get all characters (with pagination)
-- GET `/api/characters/:id` - Get character by ID
-- POST `/api/characters` - Create new character
-- PUT `/api/characters/:id` - Update character
-- DELETE `/api/characters/:id` - Delete character
+5. Open [http://localhost:5173](http://localhost:5173) in your browser
 
 ## Project Structure
 
 ```
-StarWarsApp/
-├── src/
-│   ├── components/
-│   │   └── NavBar.jsx
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx
-│   │   ├── pages/
-│   │   │   ├── Home.jsx
-│   │   │   ├── Characters.jsx
-│   │   │   ├── CharacterDetail.jsx
-│   │   │   ├── CreateCharacter.jsx
-│   │   │   ├── Login.jsx
-│   │   │   └── Register.jsx
-│   │   ├── App.jsx
-│   │   └── App.css
-│   ├── backend/
-│   │   ├── models/
-│   │   │   ├── User.js
-│   │   │   └── Character.js
-│   │   ├── routes/
-│   │   │   ├── auth.js
-│   │   │   └── characters.js
-│   │   ├── middleware/
-│   │   │   └── auth.js
-│   │   └── server.js
-│   └── README.md
+src/
+├── components/         # Reusable UI components
+├── context/           # React context providers
+├── pages/            # Page components
+├── firebase.js       # Firebase configuration
+└── App.jsx           # Main application component
 ```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
 
 ## Contributing
 
@@ -143,6 +106,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- Star Wars API for character data
-- Material-UI for the component library
-- The Star Wars franchise for inspiration
+- Star Wars API (SWAPI) for character data
+- Firebase for authentication and database
+- Material-UI for UI components
